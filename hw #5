@@ -1,0 +1,28 @@
+void listAll(struct TreeNode *t, int depth) {
+    // Print the name of the current node (file or directory)
+    printName(t, depth); 
+
+    // If the current node is a directory, recursively list all its children
+    if (isDirectory(t)) {
+        // For each child (file or directory) in this directory
+        for (TreeNode *child = t->firstChild; child != nullptr; child = child->nextSibling) {
+            // Recursively list contents of the child
+            listAll(child, depth + 1);
+        }
+    }
+}
+int FileSystem::size(struct TreeNode *t) const {
+    // Get the size of the current node (file or directory)
+    int totalSize = sizeOf(t);
+
+    // If the current node is a directory, recursively calculate the size of its children
+    if (isDirectory(t)) {
+        // For each child (file or directory) in this directory
+        for (TreeNode *child = t->firstChild; child != nullptr; child = child->nextSibling) {
+            // Add the size of the child to the total size
+            totalSize += size(child);
+        }
+    }
+
+    return totalSize;
+}
