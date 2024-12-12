@@ -1,0 +1,25 @@
+def find_largest_consecutive_subset(arr):
+    hash_table = {}
+    for num in arr:
+        hash_table[num] = num + 1 if (num + 1) in arr else None
+
+    max_length = 0
+    largest_subset = []
+
+    for num in arr:
+        if (num - 1) not in hash_table:
+            current_num = num
+            current_subset = []
+            while current_num is not None:
+                current_subset.append(current_num)
+                current_num = hash_table[current_num]
+            if len(current_subset) > max_length:
+                max_length = len(current_subset)
+                largest_subset = current_subset
+
+    return largest_subset
+
+if __name__ == "__main__":
+    input_array = [1, 3, 8, 14, 4, 10, 2, 11]
+    output = find_largest_consecutive_subset(input_array)
+    print("Largest subset of consecutive numbers:", output)
